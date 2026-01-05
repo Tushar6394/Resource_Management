@@ -3,9 +3,9 @@ export default {
     schema: "./src/utils/db/schema.ts",
     out: "./drizzle",
     dbCredentials: {
-      url: "postgresql://kgarbage_owner:HLvfOZXRA1E5@ep-wild-bread-a1n9lnte.ap-southeast-1.aws.neon.tech/kgarbage?sslmode=require",
+      url: "postgresql://neondb_owner:bIDF7e9wsjnu@ep-square-heart-a1rp4vev.ap-southeast-1.aws.neon.tech/w2w?sslmode=require",
       connectionString:
-        "postgresql://kgarbage_owner:HLvfOZXRA1E5@ep-wild-bread-a1n9lnte.ap-southeast-1.aws.neon.tech/kgarbage?sslmode=require",
+        "postgresql://neondb_owner:bIDF7e9wsjnu@ep-square-heart-a1rp4vev.ap-southeast-1.aws.neon.tech/w2w?sslmode=require",
     },
   };
   

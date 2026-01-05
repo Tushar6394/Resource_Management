@@ -83,7 +83,7 @@ export default function Home() {
       <section className="text-center mb-20">
 
         <h1 className="text-6xl font-bold mb-6 text-gray-800 tracking-tight">
-          W2W <span className="text-green-600">Waste Management</span>
+          Resource Recovery <span className="text-green-600"> & Management</span>
         </h1>
         <p className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed mb-8">
           Join our community in making waste management more efficient and rewarding!
@@ -129,9 +129,9 @@ export default function Home() {
           <ImpactCard title="Tokens Earned" value={impactData.tokensEarned.toString()} icon={Coins} />
           <ImpactCard title="CO2 Offset" value={`${impactData.co2Offset} kg`} icon={Leaf} />
         </div>
+        
       </section>
-
-   
+     
     </div>
   )
 }

@@ -18,7 +18,7 @@ import { EthereumPrivateKeyProvider } from "@web3auth/ethereum-provider"
 import { useMediaQuery } from "@/hooks/useMediaQuery"
 import { createUser, getUnreadNotifications, markNotificationAsRead, getUserByEmail, getUserBalance } from "@/utils/db/actions"
 
-const clientId = "BKYn2dX_RJE9CnKy6bnjg6BllGHxnQaWHmEHFPrlR5VvuorWUZX7A-3jYpb_GrWnvliSTW47IKx-XyKh6_oOA2Y";
+const clientId = "BACp_7zIMu0uTB_7w7xuABXqJe7f5mqdl_ESJdyWrpw0Iw7xgtFUYWElmZ99NZrhkCTaeA41svcPWUmnOQy5V2s";
 
 const chainConfig = {
   chainNamespace: CHAIN_NAMESPACES.EIP155,
@@ -210,8 +210,8 @@ export default function Header({ onMenuClick, totalEarnings }: HeaderProps) {
           <Link href="/" className="flex items-center">
             <Leaf className="h-6 w-6 md:h-8 md:w-8 text-green-500 mr-1 md:mr-2" />
             <div className="flex flex-col">
-              <span className="font-bold text-base md:text-lg text-gray-800">W2W</span>
-              <span className="text-[8px] md:text-[10px] text-gray-500 -mt-1">HackWars 2024</span>
+              <span className="font-bold text-base md:text-lg text-gray-800">Resource Recovery</span>
+              <span className="text-[8px] md:text-[10px] text-gray-500 -mt-1">HackWithChandigarh 2024</span>
             </div>
           </Link>
         </div>
@@ -268,6 +268,7 @@ export default function Header({ onMenuClick, totalEarnings }: HeaderProps) {
               {balance.toFixed(2)}
             </span>
           </div>
+
           {!loggedIn ? (
             <Button onClick={login} className="bg-green-600 hover:bg-green-700 text-white text-sm md:text-base">
               Login

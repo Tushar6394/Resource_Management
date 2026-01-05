@@ -1,9 +1,9 @@
 'use client'
 import { useState, useCallback, useEffect } from 'react'
-import {  MapPin, Upload, CheckCircle, Loader } from 'lucide-react'
+import { MapPin, Upload, CheckCircle, Loader } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { StandaloneSearchBox,  useJsApiLoader } from '@react-google-maps/api'
+import { StandaloneSearchBox, useJsApiLoader } from '@react-google-maps/api'
 import { Libraries } from '@react-google-maps/api';
 import { createUser, getUserByEmail, createReport, getRecentReports } from '@/utils/db/actions';
 import { useRouter } from 'next/navigation';
@@ -30,17 +30,17 @@ export default function ReportPage() {
     location: '',
     type: '',
     amount: '',
-  })
+  });
 
-  const [file, setFile] = useState<File | null>(null)
-  const [preview, setPreview] = useState<string | null>(null)
-  const [verificationStatus, setVerificationStatus] = useState<'idle' | 'verifying' | 'success' | 'failure'>('idle')
+  const [file, setFile] = useState<File | null>(null);
+  const [preview, setPreview] = useState<string | null>(null);
+  const [verificationStatus, setVerificationStatus] = useState<'idle' | 'verifying' | 'success' | 'failure'>('idle');
   const [verificationResult, setVerificationResult] = useState<{
     wasteType: string;
     quantity: string;
     confidence: number;
-  } | null>(null)
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  } | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [searchBox, setSearchBox] = useState<google.maps.places.SearchBox | null>(null);
 
@@ -68,21 +68,21 @@ export default function ReportPage() {
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target
-    setNewReport({ ...newReport, [name]: value })
-  }
+    const { name, value } = e.target;
+    setNewReport({ ...newReport, [name]: value });
+  };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      const selectedFile = e.target.files[0]
-      setFile(selectedFile)
-      const reader = new FileReader()
+      const selectedFile = e.target.files[0];
+      setFile(selectedFile);
+      const reader = new FileReader();
       reader.onload = (e) => {
-        setPreview(e.target?.result as string)
-      }
-      reader.readAsDataURL(selectedFile)
+        setPreview(e.target?.result as string);
+      };
+      reader.readAsDataURL(selectedFile);
     }
-  }
+  };
 
   const readFileAsBase64 = (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
@@ -94,9 +94,9 @@ export default function ReportPage() {
   };
 
   const handleVerify = async () => {
-    if (!file) return
+    if (!file) return;
 
-    setVerificationStatus('verifying')
+    setVerificationStatus('verifying');
     
     try {
       const genAI = new GoogleGenerativeAI(geminiApiKey!);
@@ -127,7 +127,7 @@ export default function ReportPage() {
 
       const result = await model.generateContent([prompt, ...imageParts]);
       const response = await result.response;
-      const text = response.text();
+      const text = await response.text();
       
       try {
         const parsedResult = JSON.parse(text);
@@ -151,7 +151,7 @@ export default function ReportPage() {
       console.error('Error verifying waste:', error);
       setVerificationStatus('failure');
     }
-  }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -185,7 +185,6 @@ export default function ReportPage() {
       setPreview(null);
       setVerificationStatus('idle');
       setVerificationResult(null);
-      
 
       toast.success(`Report submitted successfully! You've earned points for reporting waste.`);
     } catch (error) {
@@ -193,6 +192,27 @@ export default function ReportPage() {
       toast.error('Failed to submit report. Please try again.');
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  const handleGetCurrentLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          // Use reverse geocoding to get the address based on latitude and longitude
+          // For simplicity, we're using latitude and longitude directly
+          setNewReport(prev => ({
+            ...prev,
+            location: `Lat: ${latitude}, Lng: ${longitude}`
+          }));
+        },
+        (error) => {
+          toast.error('Failed to get your location. Please enable location services.');
+        }
+      );
+    } else {
+      toast.error('Geolocation is not supported by this browser.');
     }
   };
 
@@ -205,7 +225,7 @@ export default function ReportPage() {
           user = await createUser(email, 'Anonymous User');
         }
         setUser(user);
-        
+
         const recentReports = await getRecentReports();
         const formattedReports = recentReports.map(report => ({
           ...report,
@@ -222,7 +242,7 @@ export default function ReportPage() {
   return (
     <div className="p-8 max-w-4xl mx-auto">
       <h1 className="text-3xl font-semibold mb-6 text-gray-800">Report waste</h1>
-      
+
       <form onSubmit={handleSubmit} className="bg-white p-8 rounded-2xl shadow-lg mb-12">
         <div className="mb-8">
           <label htmlFor="waste-image" className="block text-lg font-medium text-gray-700 mb-2">
@@ -245,13 +265,13 @@ export default function ReportPage() {
             </div>
           </div>
         </div>
-        
+
         {preview && (
           <div className="mt-4 mb-8">
             <img src={preview} alt="Waste preview" className="max-w-full h-auto rounded-xl shadow-md" />
           </div>
         )}
-        
+
         <Button 
           type="button" 
           onClick={handleVerify} 
@@ -285,7 +305,7 @@ export default function ReportPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
           <div>
             <label htmlFor="location" className="block text-sm font-medium text-gray-700 mb-1">Location</label>
-            {isLoaded ? (
+            {isLoaded && (
               <StandaloneSearchBox
                 onLoad={onLoad}
                 onPlacesChanged={onPlacesChanged}
@@ -295,24 +315,20 @@ export default function ReportPage() {
                   id="location"
                   name="location"
                   value={newReport.location}
-                  onChange={handleInputChange}
+                  onChange={(e) => setNewReport(prev => ({ ...prev, location: e.target.value }))}
+                  placeholder="Enter location or use current location"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 transition-all duration-300 mb-2"
                   required
-                  className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 transition-all duration-300"
-                  placeholder="Enter waste location"
                 />
               </StandaloneSearchBox>
-            ) : (
-              <input
-                type="text"
-                id="location"
-                name="location"
-                value={newReport.location}
-                onChange={handleInputChange}
-                required
-                className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 transition-all duration-300"
-                placeholder="Enter waste location"
-              />
             )}
+            <Button 
+              type="button" 
+              onClick={handleGetCurrentLocation} 
+              className="w-full bg-green-600 hover:bg-green-700 text-white py-3 text-lg rounded-xl transition-colors duration-300"
+            >
+              Get Current Location
+            </Button>
           </div>
           <div>
             <label htmlFor="type" className="block text-sm font-medium text-gray-700 mb-1">Waste Type</label>
@@ -388,3 +404,5 @@ export default function ReportPage() {
     </div>
   )
 }
+
+
