@@ -7,6 +7,7 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 [![Web3Auth](https://img.shields.io/badge/Web3Auth-Enabled-7C3AED?style=for-the-badge&logo=web3.js)](https://web3auth.io/)
 [![Drizzle ORM](https://img.shields.io/badge/Drizzle_ORM-Enabled-FF6B35?style=for-the-badge)](https://orm.drizzle.team/)
+[![Vercel](https://img.shields.io/badge/Deployed_on-Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://resource-management-fawn.vercel.app/)
 
 ---
 
@@ -26,6 +27,7 @@ A fully-functional waste management ecosystem with AI-powered verification, Web3
 
 | Feature | Description |
 |---------|-------------|
+| 🌐 **Live Deployment** | Production app deployed on Vercel at [resource-management-fawn.vercel.app](https://resource-management-fawn.vercel.app) |
 | 🤖 **AI-Powered Verification** | Gemini AI analyzes waste images for accurate classification |
 | 🔐 **Web3 Authentication** | Secure login with Web3Auth and wallet integration |
 | 📍 **Location Services** | GPS-based reporting and interactive maps |
@@ -175,7 +177,7 @@ resourceManagement/
 │           ├── 📄 dbConfig.jsx
 │           └── 📄 schema.ts
 │
-└── netlify.toml                   # Deployment config
+└── vercel.json                   # Deployment config
 ```
 
 ---
@@ -225,7 +227,7 @@ resourceManagement/
 ```
 🗄️  Database      → PostgreSQL (via Drizzle ORM)
 🔄  ORM           → Drizzle ORM
-🚀  Deployment    → Netlify
+🚀  Deployment    → Vercel
 ☁️  Hosting       → Vercel (recommended)
 ```
 
@@ -403,20 +405,23 @@ GET    /api/leaderboard/:period  # Time-based rankings
 
 ## 🌐 **Deployment**
 
-### **Netlify Deployment**
+### **Vercel Deployment**
 ```bash
 # Build for production
 npm run build
 
-# Deploy to Netlify
-netlify deploy --prod --dir=out
+# Deploy to Vercel
+vercel --prod
 ```
 
 ### **Environment Setup for Production**
-- Set all environment variables in Netlify dashboard
+- Set all environment variables in Vercel dashboard
 - Configure build command: `npm run build`
-- Set publish directory: `out`
-- Enable Netlify functions if using API routes
+- Set output directory: `.next` (automatic for Next.js)
+- Enable Vercel functions for API routes (automatic)
+
+### **Live Production URL**
+🌐 **https://resource-management-fawn.vercel.app**
 
 ---
 
